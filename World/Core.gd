@@ -1,7 +1,6 @@
 extends Node
 
-
-var Version = "0.0.0.5"
+var Version = "0.0.0.7"
 
 var ServerVer = null
 

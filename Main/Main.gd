@@ -13,14 +13,16 @@ var CheckVersion = $System/CheckVersion
 var UpdateVersion = $System/UpdateVersion
 
 func _ready():
-	$Info.text = Information()
+	$InfoMain/Info.text = Information()
 	UpdateTimer.start(10)
+
 
 func _input(event):
 	if event.is_action_pressed("escape"):
 		_on_exit_pressed()
 	
 	ExitButton.visible = Core.OnFullscreen()
+
 
 func Information():
 	var stats = "Client Version: %s" % Core.Version
@@ -38,6 +40,7 @@ func Information():
 	stats = AddLine(stats, "Username: %s" % Username)
 	
 	return stats
+
 
 func AddLine(text, line):
 	return line + "\n" + text
@@ -61,7 +64,7 @@ func _on_check_version_request_completed(result, response_code, headers, body):
 		return
 	
 	Core.ServerVer = response.strip_edges()
-	$Info.text = Information()
+	$InfoMain/Info.text = Information()
 	Core.Update(UpdateVersion)
 
 
@@ -83,4 +86,4 @@ func _on_update_version_request_completed(result, response_code, headers, body):
 	
 	OS.alert("Update was installed! Stopping...", "Updater")
 	get_tree().quit()
-	
+
