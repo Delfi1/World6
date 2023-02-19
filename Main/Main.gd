@@ -60,9 +60,7 @@ func _on_check_version_request_completed(result, response_code, headers, body):
 		print(result, headers)
 		return
 	
-	OS.alert("New version: %s" % response)
-	
-	Core.ServerVer = response
+	Core.ServerVer = response.strip_edges()
 	$Info.text = Information()
 	Core.Update(UpdateVersion)
 
