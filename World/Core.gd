@@ -1,14 +1,14 @@
 extends Node
 
-var Version = "0.0.0.3"
+var Version = "0.0.0.4"
 
 var ServerVer = null
 
 var AuthInfo = null
 
-var PckUrl = ""
+var PckUrl = "https://github.com/Delfi1/World6/blob/master/Export/World.pck?raw=true"
 
-var VerUrl = ""
+var VerUrl = "https://raw.githubusercontent.com/Delfi1/World6/master/Export/Version.txt"
 
 func _input(event):
 	if event.is_action_pressed("F11"):
@@ -25,7 +25,7 @@ func VerMatch():
 	
 	var Sver = int(ServerVer[0]) * 1000 + int(ServerVer[2]) * 100 + int(ServerVer[4]) * 10 + int(ServerVer[6])
 	print("V%s, Sv%s" % [ver, Sver])
-	return (Sver <= ver)
+	return (Sver > ver)
 
 func Update(Request : HTTPRequest):
 	if not VerMatch():
