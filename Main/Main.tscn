@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Main/Main.gd" id="1_evjhi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujnwl"]
-bg_color = Color(0, 0, 0, 0.470588)
+bg_color = Color(0, 0, 0, 0.176471)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -32,12 +32,14 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -152.0
-offset_top = 24.0
-offset_right = -24.0
-offset_bottom = 72.0
+offset_left = -56.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 56.0
 grow_horizontal = 0
-text = "Exit"
+theme_override_colors/font_color = Color(1, 0.0509804, 0.0705882, 1)
+theme_override_font_sizes/font_size = 24
+text = "X"
 
 [node name="System" type="Node" parent="."]
 
@@ -53,8 +55,8 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 24.0
-offset_top = -232.0
-offset_right = 640.0
+offset_top = -200.0
+offset_right = 576.0
 offset_bottom = -24.0
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ujnwl")
@@ -70,6 +72,15 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 24
 vertical_alignment = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 216.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 32
+text = "JOIN"
 
 [connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
 [connection signal="timeout" from="System/Timer" to="." method="_on_timer_timeout"]

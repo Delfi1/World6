@@ -1,6 +1,6 @@
 extends Node
 
-var Version = "0.0.0.7"
+var Version = "0.0.0.8"
 
 var ServerVer = null
 
@@ -10,6 +10,8 @@ var PckUrl = "https://github.com/Delfi1/World6/blob/master/Export/World.pck?raw=
 
 var VerUrl = "https://raw.githubusercontent.com/Delfi1/World6/master/Export/Version.txt"
 
+func _ready():
+	Firebase.Firestore.collection('Users')
 
 func _input(event):
 	if event.is_action_pressed("F11"):
@@ -51,4 +53,3 @@ func OnFullscreen():
 func Check_Update(Request : HTTPRequest):
 	print("Check for updates...")
 	Request.request(VerUrl)
-
