@@ -1,0 +1,226 @@
+[gd_scene load_steps=3 format=3 uid="uid://dakpju5cmeui0"]
+
+[ext_resource type="Script" path="res://Auth/Auth.gd" id="1_75dgj"]
+[ext_resource type="StyleBox" uid="uid://drsl7y7oldefy" path="res://Resources/Styles/StyleBoxAuth1.tres" id="2_4bd3n"]
+
+[node name="Auth" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_75dgj")
+
+[node name="BackGround" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.129412, 0.0666667, 0.356863, 1)
+
+[node name="SignUp" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Panel" parent="SignUp"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -270.0
+offset_right = 192.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_4bd3n")
+
+[node name="MainLabel" type="Label" parent="SignUp/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_right = 96.0
+offset_bottom = 48.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "Beta SignUp"
+horizontal_alignment = 1
+
+[node name="EmailLabel" type="Label" parent="SignUp/Background"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 66.0
+offset_right = 240.0
+offset_bottom = 103.0
+theme_override_font_sizes/font_size = 24
+text = "Email"
+horizontal_alignment = 1
+
+[node name="EmailText" type="LineEdit" parent="SignUp/Background"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 106.0
+offset_right = 320.0
+offset_bottom = 146.0
+alignment = 1
+secret = true
+
+[node name="PasswordLabel" type="Label" parent="SignUp/Background"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 178.0
+offset_right = 320.0
+offset_bottom = 215.0
+theme_override_font_sizes/font_size = 24
+text = "Password"
+horizontal_alignment = 1
+
+[node name="PasswordText" type="LineEdit" parent="SignUp/Background"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 218.0
+offset_right = 320.0
+offset_bottom = 258.0
+alignment = 1
+secret = true
+
+[node name="SignUpButton" type="Button" parent="SignUp/Background"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 442.0
+offset_right = 320.0
+offset_bottom = 484.0
+text = "SignUp"
+
+[node name="ReturnLogin" type="Button" parent="SignUp/Background"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 498.0
+offset_right = 294.0
+offset_bottom = 529.0
+text = "I already have an account
+"
+flat = true
+
+[node name="Remember" type="CheckBox" parent="SignUp/Background"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 402.0
+offset_right = 272.0
+offset_bottom = 433.0
+text = "Remember me"
+
+[node name="Login" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Panel" parent="Login"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -270.0
+offset_right = 192.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_4bd3n")
+
+[node name="MainLabel" type="Label" parent="Login/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_right = 96.0
+offset_bottom = 48.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "Beta Login"
+horizontal_alignment = 1
+
+[node name="EmailLabel" type="Label" parent="Login/Background"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 66.0
+offset_right = 240.0
+offset_bottom = 103.0
+theme_override_font_sizes/font_size = 24
+text = "Email"
+horizontal_alignment = 1
+
+[node name="EmailText" type="LineEdit" parent="Login/Background"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 106.0
+offset_right = 320.0
+offset_bottom = 146.0
+alignment = 1
+
+[node name="PasswordLabel" type="Label" parent="Login/Background"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 178.0
+offset_right = 320.0
+offset_bottom = 215.0
+theme_override_font_sizes/font_size = 24
+text = "Password"
+horizontal_alignment = 1
+
+[node name="PasswordText" type="LineEdit" parent="Login/Background"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 218.0
+offset_right = 320.0
+offset_bottom = 258.0
+alignment = 1
+secret = true
+
+[node name="LoginButton" type="Button" parent="Login/Background"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 442.0
+offset_right = 320.0
+offset_bottom = 484.0
+text = "Login"
+
+[node name="ReturnSignUp" type="Button" parent="Login/Background"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 498.0
+offset_right = 294.0
+offset_bottom = 529.0
+text = "I don't have an account"
+flat = true
+
+[node name="Remember" type="CheckBox" parent="Login/Background"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 402.0
+offset_right = 272.0
+offset_bottom = 433.0
+text = "Remember me"
+
+[connection signal="pressed" from="SignUp/Background/SignUpButton" to="." method="SignUp"]
+[connection signal="pressed" from="SignUp/Background/ReturnLogin" to="." method="_on_return_login_pressed"]
+[connection signal="pressed" from="Login/Background/LoginButton" to="." method="Login"]
+[connection signal="pressed" from="Login/Background/ReturnSignUp" to="." method="_on_return_sign_up_pressed"]
