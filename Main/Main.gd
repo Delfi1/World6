@@ -6,6 +6,12 @@ var ExitButton = $Exit
 @onready
 var UpdateTimer = $System/Timer
 
+@onready
+var CheckVersion = $System/CheckVersion
+
+@onready
+var UpdateVersion = $System/UpdateVersion
+
 func _ready():
 	$Info.text = Information()
 	UpdateTimer.start(10)
@@ -43,5 +49,38 @@ func _on_exit_pressed():
 
 func _on_timer_timeout():
 	UpdateTimer.stop()
-	
+	Core.Check_Update(CheckVersion)
 	UpdateTimer.start(60)
+
+
+func _on_check_version_request_completed(result, response_code, headers, body):
+	var response = body.get_string_from_utf8()
+	
+	if response_code != 200:
+		print(result, headers)
+		return
+	
+	Core.ServerVer = response
+	
+	Core.Update(UpdateVersion)
+
+
+func _on_update_version_request_completed(result, response_code, headers, body):
+	if response_code != 200:
+		print(result, headers, body)
+		OS.alert("Error " + response_code)
+		var path1 = OS.get_executable_path().get_base_dir() + "\\World.pck"
+		var path2 = OS.get_executable_path().get_base_dir() + "\\World_save.pck"
+		
+		DirAccess.remove_absolute(path1)
+		
+		DirAccess.rename_absolute(path2, path1)
+		return
+	
+	var path = OS.get_executable_path().get_base_dir() + "\\World_save.pck"
+	
+	DirAccess.remove_absolute(path)
+	
+	OS.alert("Update was installed! Stopping...", "Updater")
+	get_tree().quit()
+	

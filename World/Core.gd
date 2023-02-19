@@ -1,6 +1,6 @@
 extends Node
 
-var Version = "0.0.0.1"
+var Version = "0.0.0.2"
 
 var ServerVer = null
 
@@ -46,6 +46,6 @@ func OnFullscreen():
 
 
 func Check_Update(Request : HTTPRequest):
-		print("Check for updates...")
-		Request.request(VerUrl)
+	print("Check for updates...")
+	Request.request(VerUrl)
 	
