@@ -22,7 +22,6 @@ grow_vertical = 2
 color = Color(0.129412, 0.0666667, 0.356863, 1)
 
 [node name="SignUp" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,7 +74,6 @@ offset_top = 106.0
 offset_right = 320.0
 offset_bottom = 146.0
 alignment = 1
-secret = true
 
 [node name="PasswordLabel" type="Label" parent="SignUp/Background"]
 layout_mode = 0
@@ -95,6 +93,24 @@ offset_right = 320.0
 offset_bottom = 258.0
 alignment = 1
 secret = true
+
+[node name="UsernameLabel" type="Label" parent="SignUp/Background"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 290.0
+offset_right = 320.0
+offset_bottom = 327.0
+theme_override_font_sizes/font_size = 24
+text = "Username"
+horizontal_alignment = 1
+
+[node name="UsernameText" type="LineEdit" parent="SignUp/Background"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 330.0
+offset_right = 320.0
+offset_bottom = 370.0
+alignment = 1
 
 [node name="SignUpButton" type="Button" parent="SignUp/Background"]
 layout_mode = 0
@@ -122,7 +138,10 @@ offset_right = 272.0
 offset_bottom = 433.0
 text = "Remember me"
 
+[node name="ChangeNameRequest" type="HTTPRequest" parent="SignUp"]
+
 [node name="Login" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -222,5 +241,6 @@ text = "Remember me"
 
 [connection signal="pressed" from="SignUp/Background/SignUpButton" to="." method="SignUp"]
 [connection signal="pressed" from="SignUp/Background/ReturnLogin" to="." method="_on_return_login_pressed"]
+[connection signal="request_completed" from="SignUp/ChangeNameRequest" to="." method="_on_change_name_completed"]
 [connection signal="pressed" from="Login/Background/LoginButton" to="." method="Login"]
 [connection signal="pressed" from="Login/Background/ReturnSignUp" to="." method="_on_return_sign_up_pressed"]

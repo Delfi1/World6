@@ -9,7 +9,7 @@ extends Control
 
 func _ready():
 	Firebase.Auth.connect("login_succeeded", _on_FirebaseAuth_login_succeeded)
-	Firebase.Auth.connect("signup_succeeded", _on_FirebaseAuth_login_succeeded)
+	Firebase.Auth.connect("signup_succeeded", _on_FirebaseAuth_siginUp_succeeded)
 	Firebase.Auth.connect("login_failed", on_login_failed)
 	#Firebase.Auth.connect("signup_failed", "on_signup_failed")
 
@@ -48,10 +48,22 @@ func SignUp():
 	
 	var password = SignUpPage.get_node("PasswordText").text
 	
+	var username = SignUpPage.get_node("UsernameText").text
+	
+	
 	if len(password) < 8:
 		print("Password!")
 		return
 	
+	if len(username) < 4:
+		print("Username!")
+	
+	Data.current_data["email"] = email
+	Data.current_data["password"] = password
+	Data.current_data["remember"] = SignUpPage.get_node("Remember").button_pressed
+	
+	
+	SwitchState(true)
 	
 	Firebase.Auth.signup_with_email_and_password(email, password)
 
@@ -61,7 +73,13 @@ func _on_FirebaseAuth_login_succeeded(auth_info):
 	Core.AuthInfo = auth_info
 	get_tree().change_scene_to_file("res://Main/Main.tscn")
 
-
+func _on_FirebaseAuth_siginUp_succeeded(auth_info):
+	Core.AuthInfo = auth_info
+	var username = SignUpPage.get_node("UsernameText").text
+	
+	Core.Change_Username(username, $SignUp/ChangeNameRequest)
+	
+	
 func on_login_failed(code, message):
 	printerr(code)
 	printerr(message)
@@ -78,10 +96,24 @@ func _on_return_sign_up_pressed():
 
 
 func SwitchState(state : bool):
-	LoginPage.get_node("LoginButton").disabled = state
+	LoginPage.get_node("EmailText").editable = not state
+	LoginPage.get_node("PasswordText").editable = not state
 	LoginPage.get_node("ReturnSignUp").disabled = state
+	LoginPage.get_node("LoginButton").disabled = state
 	
-	SignUpPage.get_node("SignUpButton").disabled = state
+	SignUpPage.get_node("EmailText").editable = not state
+	SignUpPage.get_node("PasswordText").editable = not state
+	SignUpPage.get_node("UsernameText").editable = not state
 	SignUpPage.get_node("ReturnLogin").disabled = state
+	SignUpPage.get_node("SignUpButton").disabled = state
 
 
+
+func _on_change_name_completed(result, response_code, headers, body):
+	Core.AuthInfo["displayname"] = $SignUp/Background/UsernameText.text
+	
+	Core.WithCreate()
+	
+	Data.save_data(Data.account_path)
+	
+	get_tree().change_scene_to_file("res://Main/Main.tscn")

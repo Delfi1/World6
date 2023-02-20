@@ -1,6 +1,6 @@
 extends Node
 
-var Version = "0.0.0.8"
+var Version = "0.0.0.9"
 
 var ServerVer = null
 
@@ -53,3 +53,37 @@ func OnFullscreen():
 func Check_Update(Request : HTTPRequest):
 	print("Check for updates...")
 	Request.request(VerUrl)
+
+func AddDocument(dict : Dictionary):
+	var firestore_collection : FirestoreCollection = Firebase.Firestore.collection('Users')
+	var add_task : FirestoreTask = firestore_collection.add(AuthInfo["localid"], dict)
+	var document : FirestoreTask = await add_task
+
+func WithCreate():
+	
+	var CreateDict = {
+		"Admin" = false,
+		"Username" = AuthInfo["displayname"],
+		"UUID" = AuthInfo["localid"]
+	}
+	
+	AddDocument(CreateDict)
+	
+func Change_Username(Username : String, Request : HTTPRequest):
+		if len(Username) < 4:
+			print("The name must be more than 4 characters long.")
+			return
+		
+		
+		var body = JSON.stringify({"idToken":AuthInfo["idtoken"], "displayName": Username, "returnSecureToken":false })
+		var headers = ['Connect-Type: application/json']
+		
+		var url = "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAWHS5A70xTul-YML2ZWH7lntxeOxUn7XQ"
+		
+		var error = Request.request(url, headers, HTTPClient.METHOD_POST, body)
+	
+		if error != OK:
+			printerr(error)
+	
+	
+	

@@ -13,15 +13,15 @@ var CheckVersion = $System/CheckVersion
 var UpdateVersion = $System/UpdateVersion
 
 func _ready():
-	var collection : FirestoreCollection = Firebase.Firestore.collection("deworld-a346b")
-	collection.connect("get_document", _on_get_document)
-	collection.get("mxF6WTbyc2vyyWguOSQy")
-	
 	$InfoMain/Info.text = Information()
 	UpdateTimer.start(10)
 
 func _on_get_document(document : FirestoreDocument):
 	print(document)
+
+func _on_task_finished():
+	print("Task finished")
+	pass
 
 func _input(event):
 	if event.is_action_pressed("escape"):
