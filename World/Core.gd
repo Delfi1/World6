@@ -1,16 +1,22 @@
 extends Node
 
-var Version = "0.0.1.0"
+var Version = "0.0.1.1"
 
 var ServerVer = null
 
 var AuthInfo = null
+
+var Friends = {
+	
+}
 
 var Data = null
 
 var PckUrl = "https://github.com/Delfi1/World6/blob/master/Export/World.pck?raw=true"
 
 var VerUrl = "https://raw.githubusercontent.com/Delfi1/World6/master/Export/Version.txt"
+
+var FriendID = null
 
 func _ready():
 	Firebase.Firestore.collection('Users')
@@ -56,23 +62,66 @@ func Check_Update(Request : HTTPRequest):
 	print("Check for updates...")
 	Request.request(VerUrl)
 
-func AddDocument(dict : Dictionary):
-	var firestore_collection : FirestoreCollection = Firebase.Firestore.collection('Users')
-	var add_task : FirestoreTask = firestore_collection.add(AuthInfo["localid"], dict)
+func AddDocument(collection_id : String, document_id : String, dict : Dictionary):
+	var firestore_collection : FirestoreCollection = Firebase.Firestore.collection(collection_id)
+	var add_task : FirestoreTask = firestore_collection.add(document_id, dict)
 	await add_task
 
 
+func UpdateDocument(collection_id : String, document_id : String, dict : Dictionary):
+	var firestore_collection : FirestoreCollection = Firebase.Firestore.collection(collection_id)
+	var up_task : FirestoreTask = firestore_collection.update(document_id, dict)
+	await up_task
 
 func WithCreate():
 	
 	var CreateDict = {
 		"Admin" = false,
 		"Username" = AuthInfo["displayname"],
-		"UUID" = AuthInfo["localid"]
+		"UUID" = AuthInfo["localid"],
 	}
 	
-	AddDocument(CreateDict)
+	AddDocument('Users', AuthInfo["localid"], CreateDict)
+	AddDocument('Users/%s/Friends' % AuthInfo["localid"], "Friends", {})
+
+
+func AddFriend(id : String):
+	if id == AuthInfo["localid"]:
+		return
 	
+	FriendID = id.strip_edges()
+	IsFriended()
+	
+func IsFriended():
+	var collection : FirestoreCollection = Firebase.Firestore.collection('Users/%s/Friends' % FriendID)
+	collection.connect("get_document", CheckFriend)
+	collection.connect("error", FriendError)
+	
+	
+	collection.get_doc('Friends')
+
+func FriendError(code, state, message):
+	printerr(code)
+	printerr(state)
+	printerr(message)
+
+func CheckFriend(document):
+	if document["doc_fields"].has(AuthInfo["localid"]):
+		print("Request already exist!")
+	else:
+		document["doc_fields"][AuthInfo["localid"]] = 3
+		Friends[ToUUID(FriendID)] = 2
+		UpdateDocument('Users/%s/Friends' % AuthInfo["localid"], 'Friends', Friends)
+		UpdateDocument('Users/%s/Friends' % FriendID, 'Friends', document["doc_fields"])
+
+func ToUUID(id : String):
+	return "_" + id
+
+func FromUUID(id : String):
+	if id[0] == "_":
+		id[0] = " "
+	return(id.strip_edges())
+
 func Change_Username(Username : String, Request : HTTPRequest):
 		if len(Username) < 4:
 			print("The name must be more than 4 characters long.")
@@ -88,6 +137,5 @@ func Change_Username(Username : String, Request : HTTPRequest):
 	
 		if error != OK:
 			printerr(error)
-	
-	
-	
+
+

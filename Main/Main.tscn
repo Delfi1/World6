@@ -18,6 +18,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_evjhi")
 
+[node name="System" type="Node" parent="."]
+
+[node name="Timer" type="Timer" parent="System"]
+
+[node name="CheckVersion" type="HTTPRequest" parent="System"]
+
+[node name="UpdateVersion" type="HTTPRequest" parent="System"]
+
 [node name="BackGround" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -41,13 +49,22 @@ theme_override_colors/font_color = Color(1, 0.0509804, 0.0705882, 1)
 theme_override_font_sizes/font_size = 24
 text = "X"
 
-[node name="System" type="Node" parent="."]
+[node name="Friends" type="Panel" parent="."]
+layout_mode = 1
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 608.0
+offset_bottom = 480.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ujnwl")
 
-[node name="Timer" type="Timer" parent="System"]
-
-[node name="CheckVersion" type="HTTPRequest" parent="System"]
-
-[node name="UpdateVersion" type="HTTPRequest" parent="System"]
+[node name="FriendsList" type="ItemList" parent="Friends"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+auto_height = true
 
 [node name="InfoMain" type="Panel" parent="."]
 layout_mode = 1
@@ -96,17 +113,7 @@ offset_bottom = 408.0
 theme_override_font_sizes/font_size = 24
 autowrap_mode = 3
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 216.0
-offset_bottom = 96.0
-theme_override_font_sizes/font_size = 32
-disabled = true
-text = "JOIN"
-
-[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
 [connection signal="timeout" from="System/Timer" to="." method="_on_timer_timeout"]
 [connection signal="request_completed" from="System/CheckVersion" to="." method="_on_check_version_request_completed"]
 [connection signal="request_completed" from="System/UpdateVersion" to="." method="_on_update_version_request_completed"]
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

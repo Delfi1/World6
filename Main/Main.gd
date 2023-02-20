@@ -16,14 +16,26 @@ func _ready():
 	$InfoMain/Info.text = Information()
 	UpdateTimer.start(10)
 	
+	Get_User_Info()
+	Get_User_Friends()
+	
+
+func Get_User_Info():
 	var collection : FirestoreCollection = Firebase.Firestore.collection('Users')
-	collection.connect("get_document", _on_get_document)
+	collection.connect("get_document", _on_get_UserInfo)
 	collection.connect("error", _on_document_error)
 	
 	collection.get_doc(Core.AuthInfo["localid"])
+
+func Get_User_Friends():
+	var collection : FirestoreCollection = Firebase.Firestore.collection('Users/%s/Friends' % Core.AuthInfo["localid"])
+	collection.connect("get_document", _on_get_UserFriends)
+	collection.connect("error", _on_document_error)
 	
-	
-func _on_get_document(document):
+	collection.get_doc('Friends')
+
+
+func _on_get_UserInfo(document):
 	print("Succesfull get document!")
 	Core.Data = document["doc_fields"]
 	
@@ -33,6 +45,18 @@ func _on_get_document(document):
 	if bool(Core.Data["Admin"]):
 		AdminMode()
 	
+
+func _on_get_UserFriends(document):
+	print(document)
+	Core.Friends = document["doc_fields"]
+	LoadFriendList()
+
+@onready var FriendsList = $Friends/FriendsList
+
+func LoadFriendList():
+	for i in range(len(Core.Friends)):
+		FriendsList.add_item(str(i+1) + ". " + Core.Friends.keys()[i])
+
 
 @onready var UserDataPanel = $UserData
 @onready var UserData = $UserData/Data
@@ -123,3 +147,5 @@ func _on_update_version_request_completed(result, response_code, headers, body):
 	get_tree().quit()
 
 
+func _on_add_pressed():
+	Core.AddFriend("88zUpVvnuFUuVxcQzzHb7zymVcP2")
