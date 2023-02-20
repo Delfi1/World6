@@ -13,11 +13,20 @@ var CheckVersion = $System/CheckVersion
 var UpdateVersion = $System/UpdateVersion
 
 func _ready():
-	$InfoMain/Info.text = Information()
+	$InfoMain/Info.text = "Client Version: %s" % Core.Version
+	
+	if Core.ServerVer != null:
+		$InfoMain/Info.text = AddLine($InfoMain/Info.text, "Server Version: %s" % Core.ServerVer)
+	
+	$InfoMain/Info.text = AddLine($InfoMain/Info.text, Information(Core.AuthInfo))
 	UpdateTimer.start(10)
 	
+	print("_1_2_3")
+	print(Core.FromUUID("_1_2_3"))
 	Get_User_Info()
 	Get_User_Friends()
+	
+	
 	
 
 func Get_User_Info():
@@ -36,6 +45,8 @@ func Get_User_Friends():
 
 
 func _on_get_UserInfo(document):
+	if Core.Data != null:
+		return
 	print("Succesfull get document!")
 	Core.Data = document["doc_fields"]
 	
@@ -62,6 +73,7 @@ func LoadFriendList():
 @onready var UserData = $UserData/Data
 
 func AdminMode():
+	print("ADMIN")
 	if not bool(Core.Data["Admin"]):
 		return
 	
@@ -84,17 +96,20 @@ func _input(event):
 	ExitButton.visible = Core.OnFullscreen()
 
 
-func Information():
-	var stats = "Client Version: %s" % Core.Version
+func Information(Info : Dictionary):
+	var UUID
+	if Info.has("localid"):
+		UUID = Info["localid"]
+	else:
+		UUID = Info["UUID"]
 	
-	if Core.ServerVer != null:
-		stats = AddLine(stats, "Server Version: %s" % Core.ServerVer)
+	var Username
+	if Info.has("displayname"):
+		Username = Info["displayname"]
+	else:
+		Username = Info["Username"]
 	
-	var UUID = Core.AuthInfo["localid"]
-	
-	var Username = Core.AuthInfo["displayname"]
-	
-	stats = AddLine(stats, "UUID: %s" % UUID)
+	var stats = "UUID: %s" % UUID
 	
 	stats = AddLine(stats, "Username: %s" % Username)
 	
@@ -123,7 +138,13 @@ func _on_check_version_request_completed(result, response_code, headers, body):
 		return
 	
 	Core.ServerVer = response.strip_edges()
-	$InfoMain/Info.text = Information()
+	$InfoMain/Info.text = "Client Version: %s" % Core.Version
+	
+	if Core.ServerVer != null:
+		$InfoMain/Info.text = AddLine($InfoMain/Info.text, "Server Version: %s" % Core.ServerVer)
+	
+	$InfoMain/Info.text = AddLine($InfoMain/Info.text, Information(Core.AuthInfo))
+	
 	Core.Update(UpdateVersion)
 
 
@@ -147,5 +168,18 @@ func _on_update_version_request_completed(result, response_code, headers, body):
 	get_tree().quit()
 
 
-func _on_add_pressed():
-	Core.AddFriend("88zUpVvnuFUuVxcQzzHb7zymVcP2")
+func _on_friends_list_item_clicked(index, at_position, mouse_button_index):
+	var id = Core.FromUUID(Core.Friends.keys()[index])
+	
+	var collection : FirestoreCollection = Firebase.Firestore.collection('Users')
+	collection.connect("get_document", _on_get_friend)
+	#collection.connect("error", _on_get_friend_error)
+	
+	collection.get_doc(id)
+
+@onready var FriendInfo = $FriendInfo/Information
+
+func _on_get_friend(document):
+	Core.FriendInfo = document["doc_fields"]
+	FriendInfo.text = Information(Core.FriendInfo)
+
