@@ -22,6 +22,7 @@ grow_vertical = 2
 color = Color(0.129412, 0.0666667, 0.356863, 1)
 
 [node name="SignUp" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -141,7 +142,6 @@ text = "Remember me"
 [node name="ChangeNameRequest" type="HTTPRequest" parent="SignUp"]
 
 [node name="Login" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

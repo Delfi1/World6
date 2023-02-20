@@ -1,10 +1,12 @@
 extends Node
 
-var Version = "0.0.0.9"
+var Version = "0.0.1.0"
 
 var ServerVer = null
 
 var AuthInfo = null
+
+var Data = null
 
 var PckUrl = "https://github.com/Delfi1/World6/blob/master/Export/World.pck?raw=true"
 
@@ -57,7 +59,9 @@ func Check_Update(Request : HTTPRequest):
 func AddDocument(dict : Dictionary):
 	var firestore_collection : FirestoreCollection = Firebase.Firestore.collection('Users')
 	var add_task : FirestoreTask = firestore_collection.add(AuthInfo["localid"], dict)
-	var document : FirestoreTask = await add_task
+	await add_task
+
+
 
 func WithCreate():
 	

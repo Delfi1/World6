@@ -15,9 +15,39 @@ var UpdateVersion = $System/UpdateVersion
 func _ready():
 	$InfoMain/Info.text = Information()
 	UpdateTimer.start(10)
-
-func _on_get_document(document : FirestoreDocument):
+	
+	var collection : FirestoreCollection = Firebase.Firestore.collection('Users')
+	collection.connect("get_document", _on_get_document)
+	collection.connect("error", _on_document_error)
+	
+	collection.get_doc(Core.AuthInfo["localid"])
+	
+	
+func _on_get_document(document):
+	print("Succesfull get document!")
+	Core.Data = document["doc_fields"]
+	
 	print(document)
+	print(Core.Data)
+	
+	if bool(Core.Data["Admin"]):
+		AdminMode()
+	
+
+@onready var UserDataPanel = $UserData
+@onready var UserData = $UserData/Data
+
+func AdminMode():
+	if not bool(Core.Data["Admin"]):
+		return
+	
+	UserDataPanel.visible = true
+	UserData.text = "Admin: %s\nUsername: %s \n UUID: %s" % [Core.Data["Admin"], Core.Data["Username"], Core.Data["UUID"]]
+
+func _on_document_error(code, status, message):
+	printerr(code)
+	printerr(status)
+	printerr(message)
 
 func _on_task_finished():
 	print("Task finished")
@@ -91,4 +121,5 @@ func _on_update_version_request_completed(result, response_code, headers, body):
 	
 	OS.alert("Update was installed! Stopping...", "Updater")
 	get_tree().quit()
+
 
