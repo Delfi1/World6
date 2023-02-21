@@ -65,6 +65,10 @@ func _on_get_UserFriends(document):
 @onready var FriendsList = $Friends/FriendsList
 
 func LoadFriendList():
+	for j in range(len(Core.Friends)):
+		if int(Core.Friends[Core.Friends.keys()[j]]) == 0:
+			Core.Friends[Core.Friends.keys()[j]].erase()
+	
 	for i in range(len(Core.Friends)):
 		FriendsList.add_item(str(i+1) + ". " + Core.Friends.keys()[i])
 
@@ -170,6 +174,7 @@ func _on_update_version_request_completed(result, response_code, headers, body):
 
 func _on_friends_list_item_clicked(index, at_position, mouse_button_index):
 	var id = Core.FromUUID(Core.Friends.keys()[index])
+	Core.FriendID = id
 	
 	var collection : FirestoreCollection = Firebase.Firestore.collection('Users')
 	collection.connect("get_document", _on_get_friend)
@@ -179,7 +184,36 @@ func _on_friends_list_item_clicked(index, at_position, mouse_button_index):
 
 @onready var FriendInfo = $FriendInfo/Information
 
+@onready var AcceptPanel = $FriendInfo/AcceptPanel
+
 func _on_get_friend(document):
+	FriendInfo.get_parent().visible = true
 	Core.FriendInfo = document["doc_fields"]
 	FriendInfo.text = Information(Core.FriendInfo)
+	var state = Core.Friends[Core.ToUUID(Core.FriendID)]
+	
+	match state:
+		1:
+			#Friends
+			AcceptPanel.visible = false
+		2:
+			#Waiting...
+			AcceptPanel.visible = false
+		3:
+			#Accept/Decline
+			AcceptPanel.visible = true
+
+func _on_friends_list_empty_clicked(at_position, mouse_button_index):
+	FriendInfo.get_parent().visible = false
+
+
+func _on_accept_pressed():
+	Core.ChangeFriendState(Core.FriendID, 1)
+	AcceptPanel.visible = false
+
+
+func _on_ignore_pressed():
+	Core.ChangeFriendState(Core.FriendID, 0)
+	AcceptPanel.visible = false
+
 

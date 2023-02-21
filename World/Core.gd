@@ -1,6 +1,6 @@
 extends Node
 
-var Version = "0.0.1.2"
+var Version = "0.0.1.3"
 
 var ServerVer = null
 
@@ -21,6 +21,8 @@ var PckUrl = "https://github.com/Delfi1/World6/blob/master/Export/World.pck?raw=
 var VerUrl = "https://raw.githubusercontent.com/Delfi1/World6/master/Export/Version.txt"
 
 var FriendID = null
+
+var SavedState = null
 
 func _ready():
 	Firebase.Firestore.collection('Users')
@@ -113,10 +115,29 @@ func CheckFriend(document):
 	if document["doc_fields"].has(AuthInfo["localid"]):
 		print("Request already exist!")
 	else:
-		document["doc_fields"][AuthInfo["localid"]] = 3
+		document["doc_fields"][ToUUID(AuthInfo["localid"])] = 3
 		Friends[ToUUID(FriendID)] = 2
 		UpdateDocument('Users/%s/Friends' % AuthInfo["localid"], 'Friends', Friends)
 		UpdateDocument('Users/%s/Friends' % FriendID, 'Friends', document["doc_fields"])
+
+
+func GetFriendState(document):
+	document["doc_fields"][ToUUID(AuthInfo["localid"])] = SavedState
+	Friends[ToUUID(FriendID)] = SavedState
+	UpdateDocument('Users/%s/Friends' % AuthInfo["localid"], 'Friends', Friends)
+	UpdateDocument('Users/%s/Friends' % FriendID, 'Friends', document["doc_fields"])
+
+
+func ChangeFriendState(id, state):
+	var collection : FirestoreCollection = Firebase.Firestore.collection('Users/%s/Friends' % id)
+	collection.connect("get_document", GetFriendState)
+	collection.connect("error", FriendError)
+	
+	collection.get_doc('Friends')
+	
+	SavedState = state
+	FriendID = id
+
 
 func ToUUID(id : String):
 	return "_" + id
@@ -125,6 +146,7 @@ func FromUUID(id : String):
 	if id[0] == "_":
 		id[0] = " "
 	return(id.strip_edges())
+
 
 func Change_Username(Username : String, Request : HTTPRequest):
 		if len(Username) < 4:

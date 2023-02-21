@@ -86,6 +86,30 @@ grow_vertical = 2
 autowrap_mode = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="AcceptPanel" type="Panel" parent="FriendInfo"]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 328.0
+offset_right = 176.0
+offset_bottom = 392.0
+
+[node name="Accept" type="Button" parent="FriendInfo/AcceptPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 72.0
+offset_bottom = 56.0
+text = "Accept"
+
+[node name="Ignore" type="Button" parent="FriendInfo/AcceptPanel"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 8.0
+offset_right = 152.0
+offset_bottom = 56.0
+text = "Ignore"
+
 [node name="InfoMain" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 2
@@ -137,4 +161,7 @@ autowrap_mode = 3
 [connection signal="request_completed" from="System/CheckVersion" to="." method="_on_check_version_request_completed"]
 [connection signal="request_completed" from="System/UpdateVersion" to="." method="_on_update_version_request_completed"]
 [connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
+[connection signal="empty_clicked" from="Friends/FriendsList" to="." method="_on_friends_list_empty_clicked"]
 [connection signal="item_clicked" from="Friends/FriendsList" to="." method="_on_friends_list_item_clicked"]
+[connection signal="pressed" from="FriendInfo/AcceptPanel/Accept" to="." method="_on_accept_pressed"]
+[connection signal="pressed" from="FriendInfo/AcceptPanel/Ignore" to="." method="_on_ignore_pressed"]
