@@ -4,6 +4,8 @@ extends Control
 func _ready():
 	Core.WindowMinSize(Vector2i(1280, 720))
 	CheckUpdate()
+	
+	$System/Timer.start(10)
 
 func _input(event):
 	$ExitButton.visible = Core.IsFullscreen()
@@ -41,3 +43,7 @@ func _on_update_request(result, response_code, headers, body):
 	OS.alert("New version was installed! Stopping...", "Updater")
 	get_tree().quit()
 
+
+
+func _on_timer_timeout():
+	CheckUpdate()

@@ -126,6 +126,11 @@ fit_content = true
 
 [node name="UpdateRequest" type="HTTPRequest" parent="System"]
 
+[node name="Timer" type="Timer" parent="System"]
+
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="request_completed" from="System/CheckRequest" to="." method="_on_check_request"]
 [connection signal="request_completed" from="System/UpdateRequest" to="." method="_on_update_request"]
+[connection signal="timeout" from="System/Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="System/Timer" to="Logs" method="_on_timer_timeout"]
+[connection signal="timeout" from="System/Timer" to="UserInfo" method="_on_timer_timeout"]
