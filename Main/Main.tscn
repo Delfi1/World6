@@ -1,13 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4bf0krd82udt"]
+[gd_scene load_steps=4 format=3 uid="uid://yt4cs7sovdyt"]
 
-[ext_resource type="Script" path="res://Main/Main.gd" id="1_evjhi"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujnwl"]
-bg_color = Color(0, 0, 0, 0.176471)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[ext_resource type="Script" path="res://Main/Main.gd" id="1_fxc0m"]
+[ext_resource type="Script" path="res://Main/Logs.gd" id="2_d75pd"]
+[ext_resource type="Script" path="res://Main/UserInfo.gd" id="2_rk2k5"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -16,15 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_evjhi")
-
-[node name="System" type="Node" parent="."]
-
-[node name="Timer" type="Timer" parent="System"]
-
-[node name="CheckVersion" type="HTTPRequest" parent="System"]
-
-[node name="UpdateVersion" type="HTTPRequest" parent="System"]
+script = ExtResource("1_fxc0m")
 
 [node name="BackGround" type="ColorRect" parent="."]
 layout_mode = 1
@@ -33,135 +20,112 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.254902, 0.345098, 0.733333, 1)
+color = Color(0.2, 0.533333, 0.576471, 1)
 
-[node name="Exit" type="Button" parent="."]
+[node name="Tile" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_right = 260.0
+offset_bottom = 91.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0.219608, 0.219608, 0.219608, 1)
+theme_override_constants/shadow_offset_x = -2
+theme_override_constants/shadow_offset_y = -4
+theme_override_font_sizes/font_size = 64
+text = "Delfi:World"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitButton" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 1864.0
+offset_top = 8.0
+offset_right = 1912.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0.72549, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "X"
+
+[node name="Logs" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 832.0
+offset_bottom = 640.0
+script = ExtResource("2_d75pd")
+
+[node name="Tile" type="Label" parent="Logs"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_right = 96.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0.219608, 0.219608, 0.219608, 1)
+theme_override_constants/shadow_offset_x = -2
+theme_override_constants/shadow_offset_y = -4
+theme_override_font_sizes/font_size = 24
+text = "Logs"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Text" type="RichTextLabel" parent="Logs"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 40.0
+offset_right = 752.0
+offset_bottom = 496.0
+fit_content = true
+
+[node name="UserInfo" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -56.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = 56.0
+offset_left = -384.0
+offset_top = 128.0
+offset_right = -64.0
+offset_bottom = 544.0
 grow_horizontal = 0
-theme_override_colors/font_color = Color(1, 0.0509804, 0.0705882, 1)
+script = ExtResource("2_rk2k5")
+
+[node name="Tile" type="Label" parent="UserInfo"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_right = 96.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0.219608, 0.219608, 0.219608, 1)
+theme_override_constants/shadow_offset_x = -2
+theme_override_constants/shadow_offset_y = -4
 theme_override_font_sizes/font_size = 24
-text = "X"
+text = "Username"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Friends" type="Panel" parent="."]
-layout_mode = 1
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 608.0
-offset_bottom = 480.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ujnwl")
-
-[node name="FriendsList" type="ItemList" parent="Friends"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-auto_height = true
-
-[node name="FriendInfo" type="Panel" parent="."]
-layout_mode = 1
-offset_left = 640.0
-offset_top = 32.0
-offset_right = 1000.0
-offset_bottom = 432.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ujnwl")
-
-[node name="Information" type="Label" parent="FriendInfo"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0232558
-anchor_top = 0.0208333
-anchor_right = 0.976744
-anchor_bottom = 0.979167
-grow_horizontal = 2
-grow_vertical = 2
-autowrap_mode = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="AcceptPanel" type="Panel" parent="FriendInfo"]
-visible = false
+[node name="Text" type="RichTextLabel" parent="UserInfo"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 328.0
-offset_right = 176.0
-offset_bottom = 392.0
+offset_top = 40.0
+offset_right = 304.0
+offset_bottom = 400.0
+fit_content = true
 
-[node name="Accept" type="Button" parent="FriendInfo/AcceptPanel"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 72.0
-offset_bottom = 56.0
-text = "Accept"
+[node name="System" type="Node" parent="."]
 
-[node name="Ignore" type="Button" parent="FriendInfo/AcceptPanel"]
-layout_mode = 0
-offset_left = 88.0
-offset_top = 8.0
-offset_right = 152.0
-offset_bottom = 56.0
-text = "Ignore"
+[node name="CheckRequest" type="HTTPRequest" parent="System"]
 
-[node name="InfoMain" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = -200.0
-offset_right = 576.0
-offset_bottom = -24.0
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ujnwl")
+[node name="UpdateRequest" type="HTTPRequest" parent="System"]
 
-[node name="Info" type="Label" parent="InfoMain"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.012987
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 24
-vertical_alignment = 2
-autowrap_mode = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="UserData" type="Panel" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 608.0
-offset_top = -440.0
-offset_right = 1088.0
-offset_bottom = -24.0
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ujnwl")
-
-[node name="Data" type="Label" parent="UserData"]
-layout_mode = 1
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 472.0
-offset_bottom = 408.0
-theme_override_font_sizes/font_size = 24
-autowrap_mode = 3
-
-[connection signal="timeout" from="System/Timer" to="." method="_on_timer_timeout"]
-[connection signal="request_completed" from="System/CheckVersion" to="." method="_on_check_version_request_completed"]
-[connection signal="request_completed" from="System/UpdateVersion" to="." method="_on_update_version_request_completed"]
-[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
-[connection signal="empty_clicked" from="Friends/FriendsList" to="." method="_on_friends_list_empty_clicked"]
-[connection signal="item_clicked" from="Friends/FriendsList" to="." method="_on_friends_list_item_clicked"]
-[connection signal="pressed" from="FriendInfo/AcceptPanel/Accept" to="." method="_on_accept_pressed"]
-[connection signal="pressed" from="FriendInfo/AcceptPanel/Ignore" to="." method="_on_ignore_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="request_completed" from="System/CheckRequest" to="." method="_on_check_request"]
+[connection signal="request_completed" from="System/UpdateRequest" to="." method="_on_update_request"]

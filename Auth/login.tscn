@@ -1,0 +1,182 @@
+[gd_scene load_steps=9 format=3 uid="uid://craptwl8nk0dm"]
+
+[ext_resource type="Script" path="res://Auth/Login.gd" id="1_33s88"]
+[ext_resource type="Texture2D" uid="uid://coag0ysw7hft2" path="res://Auth/icons/mail.svg" id="2_b2htu"]
+[ext_resource type="Texture2D" uid="uid://c7gu44s5untrb" path="res://Auth/icons/password.svg" id="3_nqs72"]
+[ext_resource type="StyleBox" uid="uid://deju7qn3if1xt" path="res://Auth/LoginButton/Normal.tres" id="4_cl5lh"]
+[ext_resource type="StyleBox" uid="uid://phtie83vrktc" path="res://Auth/LoginButton/Hover.tres" id="5_pc0rc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ramhj"]
+bg_color = Color(0.254902, 0.678431, 0.635294, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 8
+shadow_offset = Vector2(-4, -8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j8ccq"]
+bg_color = Color(0.92549, 0.92549, 0.92549, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 2
+shadow_offset = Vector2(-4, -4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_77s1m"]
+bg_color = Color(0.92549, 0.92549, 0.92549, 1)
+
+[node name="Login" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_33s88")
+
+[node name="BackGround" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.180392, 0.513726, 0.694118, 1)
+
+[node name="Tile" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 96.0
+offset_top = 296.0
+offset_right = 616.0
+offset_bottom = 387.0
+rotation = -0.558505
+theme_override_colors/font_shadow_color = Color(0.219608, 0.219608, 0.219608, 1)
+theme_override_constants/shadow_offset_x = -2
+theme_override_constants/shadow_offset_y = -4
+theme_override_font_sizes/font_size = 64
+text = "Delfi:World"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SignBox" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -224.0
+offset_top = -348.0
+offset_right = 224.0
+offset_bottom = 348.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="SignBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0, 0, 0, 1)
+border_width = 2.0
+
+[node name="Main" type="Panel" parent="SignBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ramhj")
+
+[node name="EmailPanel" type="Panel" parent="SignBox/Main"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 416.0
+offset_bottom = 104.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_j8ccq")
+
+[node name="MailIcon" type="Sprite2D" parent="SignBox/Main/EmailPanel"]
+position = Vector2(28, 32)
+scale = Vector2(0.833333, 0.833333)
+texture = ExtResource("2_b2htu")
+
+[node name="EmailText" type="LineEdit" parent="SignBox/Main/EmailPanel"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 8.0
+offset_right = 352.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0.447059, 0.447059, 0.447059, 1)
+theme_override_colors/caret_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_77s1m")
+placeholder_text = "email"
+
+[node name="Line2D" type="Line2D" parent="SignBox/Main/EmailPanel"]
+position = Vector2(56, 56)
+points = PackedVector2Array(0, 0, 296, 0)
+width = 1.0
+default_color = Color(0.447059, 0.447059, 0.447059, 1)
+
+[node name="PasswordPanel" type="Panel" parent="SignBox/Main"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 136.0
+offset_right = 416.0
+offset_bottom = 200.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_j8ccq")
+
+[node name="PasswordIcon" type="Sprite2D" parent="SignBox/Main/PasswordPanel"]
+position = Vector2(28, 32)
+scale = Vector2(0.833333, 0.833333)
+texture = ExtResource("3_nqs72")
+
+[node name="PasswordText" type="LineEdit" parent="SignBox/Main/PasswordPanel"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 8.0
+offset_right = 352.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0.447059, 0.447059, 0.447059, 1)
+theme_override_colors/caret_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_77s1m")
+placeholder_text = "password"
+secret = true
+
+[node name="Line2D" type="Line2D" parent="SignBox/Main/PasswordPanel"]
+position = Vector2(56, 56)
+points = PackedVector2Array(0, 0, 296, 0)
+width = 1.0
+default_color = Color(0.447059, 0.447059, 0.447059, 1)
+
+[node name="LoginButton" type="Button" parent="SignBox/Main"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 638.0
+offset_right = 368.0
+offset_bottom = 680.0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = ExtResource("4_cl5lh")
+theme_override_styles/hover = ExtResource("5_pc0rc")
+text = "Login"
+
+[node name="Remember" type="CheckBox" parent="SignBox/Main"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 584.0
+offset_right = 320.0
+offset_bottom = 624.0
+theme_override_font_sizes/font_size = 22
+text = "Remember me"
+
+[connection signal="pressed" from="SignBox/Main/LoginButton" to="." method="Login"]
