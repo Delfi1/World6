@@ -52,7 +52,7 @@ func _on_login_succeeded(auth):
 		Data.SaveData(Data.AccountPath, data)
 		get_tree().change_scene_to_file("res://Main/Main.tscn")
 		Core.AddDocument('Users', Core.UserData["UUID"], Core.UserData)
-		Core.UserData["registered"] = auth["registered"]
+
 
 func _on_login_failed(error_code, message):
 	OS.alert(message, "Error " + str(error_code))

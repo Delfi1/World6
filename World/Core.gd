@@ -4,7 +4,7 @@ var PckUrl = "https://github.com/Delfi1/World6/blob/master/Export/World.pck?raw=
 
 var VerUrl = "https://raw.githubusercontent.com/Delfi1/World6/master/Export/Version.txt"
 
-var Version = "0.0.1.5"
+var Version = "0.0.1.6"
 
 var Server = null
 
@@ -34,6 +34,9 @@ func _input(event):
 ## @args error_function
 func GetDocument(collection_id, document_id, function : Callable, error : Callable):
 	var collection : FirestoreCollection = Firebase.Firestore.collection(collection_id)
+	if collection.is_connected("get_document", function):
+		collection.disconnect("get_document", function)
+		collection.disconnect("error", error)
 	collection.connect("get_document", function)
 	collection.connect("error", error)
 	collection.get_doc(document_id)

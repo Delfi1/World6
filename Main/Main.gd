@@ -50,6 +50,7 @@ func _on_update_request(result, response_code, headers, body):
 func _on_timer_timeout():
 	CheckUpdate()
 	CheckList()
+	Friends.GetFriendsList(_on_get_friends, _on_get_friends_error)
 
 
 @onready
@@ -61,24 +62,27 @@ func CheckList():
 	print(Friends.List)
 	if len(Friends.List) < 1:
 		return
-	
+	print("Get")
 	for i in range(len(Friends.List)):
-		Friendlist.add_item(Friends.List[Friends.List.keys()[i]])
+		var friend = Friends.List[Friends.List.keys()[i]]
+		print(friend)
+		Friendlist.clear()
+		Friendlist.add_item(friend["Name"])
 
 
 func _on_get_friends(document):
 	if not document["doc_fields"].has("friends"):
 		return
 	
-	Friends.List = document["doc_fields"]["friends"]
+	var friends = document["doc_fields"]["friends"]
 	
-	Friends.DisconnectFriends('Users', _on_get_friends, _on_get_friends_error)
+	print(friends)
+	
+	Friends.List = friends
 
 
 func _on_get_friends_error(code, state, message):
 	printerr(code)
 	printerr(state)
 	printerr(message)
-	
-	Friends.DisconnectFriends('Users', _on_get_friends, _on_get_friends_error)
-	
+

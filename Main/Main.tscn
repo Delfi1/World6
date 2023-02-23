@@ -102,11 +102,15 @@ offset_bottom = 272.0
 fit_content = true
 
 [node name="Friends" type="Panel" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
 offset_left = 64.0
-offset_top = 512.0
+offset_top = -544.0
 offset_right = 512.0
-offset_bottom = 1024.0
+offset_bottom = -32.0
+grow_vertical = 0
 script = ExtResource("3_60uvj")
 
 [node name="Tile" type="Label" parent="Friends"]
@@ -174,6 +178,11 @@ offset_left = 16.0
 offset_top = 80.0
 offset_right = 432.0
 offset_bottom = 496.0
+
+[node name="Panel" type="Panel" parent="Friends/PageAddFriend"]
+layout_mode = 0
+offset_right = 416.0
+offset_bottom = 416.0
 
 [node name="UserInfo" type="Panel" parent="."]
 layout_mode = 1
