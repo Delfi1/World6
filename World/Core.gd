@@ -4,7 +4,7 @@ var PckUrl = "https://github.com/Delfi1/World6/blob/master/Export/World.pck?raw=
 
 var VerUrl = "https://raw.githubusercontent.com/Delfi1/World6/master/Export/Version.txt"
 
-var Version = "0.0.1.4"
+var Version = "0.0.1.5"
 
 var Server = null
 
@@ -28,12 +28,15 @@ func _input(event):
 		else:
 			get_viewport().get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN
 
-
+## @args collection_id
+## @args document_id
+## @args function
+## @args error_function
 func GetDocument(collection_id, document_id, function : Callable, error : Callable):
 	var collection : FirestoreCollection = Firebase.Firestore.collection(collection_id)
 	collection.connect("get_document", function)
 	collection.connect("error", error)
-	collection.get(document_id)
+	collection.get_doc(document_id)
 
 
 func AddDocument(collection_id, document_id, dict : Dictionary):
