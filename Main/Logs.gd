@@ -13,6 +13,6 @@ func UpdateText():
 	else:
 		$Text.text += "Server version: Loading...\n"
 	
-
-func _on_timer_timeout():
+	await get_tree().create_timer(1).timeout
 	UpdateText()
+	return

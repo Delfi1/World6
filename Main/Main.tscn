@@ -226,6 +226,7 @@ fit_content = true
 [node name="Timer" type="Timer" parent="System"]
 
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Friends/ListButton" to="." method="_on_list_button_pressed"]
 [connection signal="pressed" from="Friends/ListButton" to="Friends" method="_on_list_button_pressed"]
 [connection signal="pressed" from="Friends/AddFriendButton" to="Friends" method="_on_add_friend_button_pressed"]
 [connection signal="request_completed" from="System/CheckRequest" to="." method="_on_check_request"]
