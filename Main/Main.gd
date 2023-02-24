@@ -90,3 +90,15 @@ func _on_get_friends_error(code, state, message):
 
 func _on_list_button_pressed():
 	Friends.GetFriendsList(_on_get_friends, _on_get_friends_error)
+
+
+func LoadFriendInfo(Friend : Dictionary, id : String):
+	$FriendInfo/Tile.text = Friend["Name"]
+	$FriendInfo/Text.text += "User ID: %s\n" % id
+	$FriendInfo/Text.text += "[Debug] State: %s\n" % Friend["State"]
+
+
+func _on_item_list_item_clicked(index, at_position, mouse_button_index):
+	print(Friends.List.keys()[index])
+	LoadFriendInfo(Friends.List[Friends.List.keys()[index]], Friends.List.keys()[index])
+	$FriendInfo.visible = true

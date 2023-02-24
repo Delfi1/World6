@@ -4,7 +4,7 @@ var PckUrl = "https://github.com/Delfi1/World6/blob/master/Export/World.pck?raw=
 
 var VerUrl = "https://raw.githubusercontent.com/Delfi1/World6/master/Export/Version.txt"
 
-var Version = "0.0.1.7"
+var Version = "0.0.1.8"
 
 var Server = null
 
@@ -14,7 +14,6 @@ var UserData = {
 	"UUID" : null,
 	"registered" : false
 }
-
 
 func IsFullscreen():
 	return get_viewport().get_window().mode == Window.MODE_EXCLUSIVE_FULLSCREEN
@@ -46,6 +45,9 @@ func AddDocument(collection_id, document_id, dict : Dictionary):
 	var collection : FirestoreCollection = Firebase.Firestore.collection(collection_id)
 	var add_task : FirestoreTask = collection.add(document_id, dict)
 	await add_task
+
+func UpdateDocument(collection_id, document_id, dict : Dictionary):
+	pass
 
 
 func WindowMinSize(size : Vector2i):
