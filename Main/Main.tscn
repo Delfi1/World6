@@ -132,6 +132,16 @@ selection_enabled = true
 
 [node name="Timer" type="Timer" parent="System"]
 
+[node name="CreateRoom" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 64.0
+offset_top = 512.0
+offset_right = 248.0
+offset_bottom = 560.0
+disabled = true
+text = "Create Lobby"
+
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="request_completed" from="System/CheckRequest" to="." method="_on_check_request"]
 [connection signal="request_completed" from="System/UpdateRequest" to="." method="_on_update_request"]

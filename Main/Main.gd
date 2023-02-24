@@ -2,10 +2,37 @@ extends Control
 
 
 func _ready():
+	GetUserData()
 	Core.WindowMinSize(Vector2i(1280, 720))
 	_on_timer_timeout()
 	$System/Timer.start(30)
 
+
+
+func GetUserData():
+	Core.GetDocument("Users", Core.UserData["UUID"], GetDataSuccess, GetDataError)
+
+
+func GetDataSuccess(document):
+	print(document)
+	var data = document["doc_fields"]
+	Core.UserData["Admin"] = data["Admin"]
+	Admin()
+
+func GetDataError(code, status, message):
+	printerr(code)
+	printerr(status)
+	printerr(message)
+
+
+func Admin():
+	if not Core.UserData["Admin"]:
+		return
+	
+	$Tile.text += " [Admin mode]"
+	$CreateRoom.visible = true
+	$CreateRoom.disabled = false
+	
 
 func _input(event):
 	if event == InputEventKey:
@@ -48,4 +75,4 @@ func _on_update_request(result, response_code, headers, body):
 
 func _on_timer_timeout():
 	CheckUpdate()
-
+	Admin()
