@@ -4,7 +4,7 @@ var PckUrl = "https://github.com/Delfi1/World6/blob/master/Export/World.pck?raw=
 
 var VerUrl = "https://raw.githubusercontent.com/Delfi1/World6/master/Export/Version.txt"
 
-var Version = "0.0.1.8"
+var Version = "0.0.1.9"
 
 var Server = null
 
@@ -12,7 +12,6 @@ var UserData = {
 	"Name" : null,
 	"Email" : null,
 	"UUID" : null,
-	"registered" : false
 }
 
 func IsFullscreen():
@@ -27,27 +26,35 @@ func _input(event):
 		else:
 			get_viewport().get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN
 
-## @args collection_id
-## @args document_id
-## @args function
-## @args error_function
+var SavedCollection = null
+
 func GetDocument(collection_id, document_id, function : Callable, error : Callable):
+	if SavedCollection != null:
+		SavedCollection.disconnect("get_document", function)
+		SavedCollection.disconnect("error", error)
+		SavedCollection = null
+	
 	var collection : FirestoreCollection = Firebase.Firestore.collection(collection_id)
 	if collection.is_connected("get_document", function):
 		collection.disconnect("get_document", function)
 		collection.disconnect("error", error)
+	
 	collection.connect("get_document", function)
 	collection.connect("error", error)
+	
 	collection.get_doc(document_id)
+	SavedCollection = collection
 
 
 func AddDocument(collection_id, document_id, dict : Dictionary):
 	var collection : FirestoreCollection = Firebase.Firestore.collection(collection_id)
-	var add_task : FirestoreTask = collection.add(document_id, dict)
-	await add_task
+	collection.add(document_id, dict)
+
 
 func UpdateDocument(collection_id, document_id, dict : Dictionary):
-	pass
+	var collection : FirestoreCollection = Firebase.Firestore.collection(collection_id)
+	
+	collection.update(document_id, dict)
 
 
 func WindowMinSize(size : Vector2i):

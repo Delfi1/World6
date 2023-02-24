@@ -1,22 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://yt4cs7sovdyt"]
+[gd_scene load_steps=4 format=3 uid="uid://yt4cs7sovdyt"]
 
 [ext_resource type="Script" path="res://Main/Main.gd" id="1_fxc0m"]
 [ext_resource type="Script" path="res://Main/Logs.gd" id="2_d75pd"]
 [ext_resource type="Script" path="res://Main/UserInfo.gd" id="2_rk2k5"]
-[ext_resource type="Script" path="res://Main/Friends.gd" id="3_60uvj"]
-[ext_resource type="StyleBox" uid="uid://bfuqn2qms832" path="res://Main/FriendListButtons/Pressed.tres" id="4_t0xn1"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pxgi2"]
-bg_color = Color(0.113725, 0.168627, 0.176471, 1)
-corner_radius_top_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l8o4m"]
-bg_color = Color(0.2, 0.372549, 0.4, 1)
-corner_radius_top_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7yjh"]
-bg_color = Color(0.113725, 0.168627, 0.176471, 1)
-corner_radius_top_right = 16
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -101,122 +87,6 @@ offset_right = 432.0
 offset_bottom = 272.0
 fit_content = true
 
-[node name="Friends" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 64.0
-offset_top = -544.0
-offset_right = 512.0
-offset_bottom = -32.0
-grow_vertical = 0
-script = ExtResource("3_60uvj")
-
-[node name="Tile" type="Label" parent="Friends"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -96.0
-offset_right = 96.0
-offset_bottom = 37.0
-grow_horizontal = 2
-theme_override_colors/font_shadow_color = Color(0.219608, 0.219608, 0.219608, 1)
-theme_override_constants/shadow_offset_x = -2
-theme_override_constants/shadow_offset_y = -4
-theme_override_font_sizes/font_size = 24
-text = "Freinds
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ListButton" type="Button" parent="Friends"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 40.0
-offset_right = 224.0
-offset_bottom = 80.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_pxgi2")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_l8o4m")
-toggle_mode = true
-button_pressed = true
-text = "List"
-
-[node name="AddFriendButton" type="Button" parent="Friends"]
-layout_mode = 0
-offset_left = 224.0
-offset_top = 40.0
-offset_right = 432.0
-offset_bottom = 80.0
-focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_q7yjh")
-theme_override_styles/pressed = ExtResource("4_t0xn1")
-toggle_mode = true
-text = "Add friend"
-
-[node name="PageList" type="Control" parent="Friends"]
-anchors_preset = 0
-offset_left = 16.0
-offset_top = 80.0
-offset_right = 432.0
-offset_bottom = 496.0
-
-[node name="ItemList" type="ItemList" parent="Friends/PageList"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="PageAddFriend" type="Control" parent="Friends"]
-visible = false
-anchors_preset = 0
-offset_left = 16.0
-offset_top = 80.0
-offset_right = 432.0
-offset_bottom = 496.0
-
-[node name="Panel" type="Panel" parent="Friends/PageAddFriend"]
-layout_mode = 0
-offset_right = 416.0
-offset_bottom = 416.0
-
-[node name="FriendIdText" type="LineEdit" parent="Friends/PageAddFriend/Panel"]
-layout_mode = 0
-offset_left = 112.0
-offset_top = 48.0
-offset_right = 368.0
-offset_bottom = 79.0
-
-[node name="FriendIdLabel" type="Label" parent="Friends/PageAddFriend/Panel"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 48.0
-offset_right = 104.0
-offset_bottom = 79.0
-text = "Friend id:"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Information" type="Label" parent="Friends/PageAddFriend/Panel"]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 88.0
-offset_right = 384.0
-offset_bottom = 280.0
-theme_override_colors/font_color = Color(0.773856, 2.23808e-06, 9.62615e-07, 1)
-
-[node name="SendButton" type="Button" parent="Friends/PageAddFriend/Panel"]
-layout_mode = 0
-offset_left = 264.0
-offset_top = 344.0
-offset_right = 368.0
-offset_bottom = 376.0
-text = "Send"
-
 [node name="UserInfo" type="Panel" parent="."]
 layout_mode = 1
 offset_left = 64.0
@@ -254,47 +124,6 @@ fit_content = true
 autowrap_mode = 1
 selection_enabled = true
 
-[node name="FriendInfo" type="Panel" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 536.0
-offset_top = -384.0
-offset_right = 856.0
-offset_bottom = -32.0
-grow_vertical = 0
-
-[node name="Tile" type="Label" parent="FriendInfo"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -96.0
-offset_right = 96.0
-offset_bottom = 40.0
-grow_horizontal = 2
-theme_override_colors/font_shadow_color = Color(0.219608, 0.219608, 0.219608, 1)
-theme_override_constants/shadow_offset_x = -2
-theme_override_constants/shadow_offset_y = -4
-theme_override_font_sizes/font_size = 24
-text = "Username"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Text" type="RichTextLabel" parent="FriendInfo"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 40.0
-offset_right = 304.0
-offset_bottom = 336.0
-focus_mode = 2
-theme_override_font_sizes/normal_font_size = 24
-fit_content = true
-autowrap_mode = 1
-selection_enabled = true
-
 [node name="System" type="Node" parent="."]
 
 [node name="CheckRequest" type="HTTPRequest" parent="System"]
@@ -304,11 +133,6 @@ selection_enabled = true
 [node name="Timer" type="Timer" parent="System"]
 
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
-[connection signal="pressed" from="Friends/ListButton" to="." method="_on_list_button_pressed"]
-[connection signal="pressed" from="Friends/ListButton" to="Friends" method="_on_list_button_pressed"]
-[connection signal="pressed" from="Friends/AddFriendButton" to="Friends" method="_on_add_friend_button_pressed"]
-[connection signal="item_clicked" from="Friends/PageList/ItemList" to="." method="_on_item_list_item_clicked"]
-[connection signal="pressed" from="Friends/PageAddFriend/Panel/SendButton" to="Friends" method="_on_send_button_pressed"]
 [connection signal="request_completed" from="System/CheckRequest" to="." method="_on_check_request"]
 [connection signal="request_completed" from="System/UpdateRequest" to="." method="_on_update_request"]
 [connection signal="timeout" from="System/Timer" to="." method="_on_timer_timeout"]
