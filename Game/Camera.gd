@@ -8,11 +8,6 @@ const SPEED = 5.0
 @onready var Camera = $Neck/GlobalCamera
 
 func _unhandled_input(event):
-	if event is InputEventMouseButton:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	elif event.is_action_pressed("ui_cancel"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
 	if IsCaptured():
 		if event is InputEventMouseMotion:
 			Neck.rotate_y(-event.relative.x * 0.005)
@@ -24,8 +19,9 @@ func IsCaptured():
 
 
 func _physics_process(delta):
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+	if not IsCaptured():
+		return
+	
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	var direction = (Neck.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:

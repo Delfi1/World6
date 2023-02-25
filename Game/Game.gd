@@ -10,10 +10,16 @@ var objects = []
 
 @onready var Camera = $Camera/Neck/GlobalCamera
 
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 func _input(event):
 	$PauseScreen.visible = not IsCaptured()
-	if event is InputEventMouseButton:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if event.is_action_pressed("ui_cancel"):
+		if IsCaptured():
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	
 	if event.is_action_pressed("Undo") and len(actions) != 0:
@@ -25,15 +31,19 @@ func _input(event):
 	
 	
 	if event.is_action_pressed("Light"):
-		var Light = preload("res://Game/Objects/light.tscn").instantiate()
-		add_child(Light)
-		Light.rotation.x = Camera.rotation.x
-		Light.rotation.y = Neck.rotation.y
-		Light.position = Camera.global_transform.origin
-		AddObject(Light)
+		var Light = preload("res://Game/Objects/light.tscn")
+		var rot = Vector3(Camera.rotation.x, Neck.rotation.y, 0)
+		
+		var pos = Camera.global_transform.origin
+		
+		summon(Light, pos, rot)
 
-#func summon(object : PackedScene):
-	#add_child()
+func summon(scene : PackedScene, pos : Vector3, rot := Vector3(0, 0, 0)):
+	var object = scene.instantiate()
+	add_child(object)
+	object.position = pos
+	object.rotation = rot
+	AddObject(object)
 
 
 
