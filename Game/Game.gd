@@ -103,7 +103,7 @@ func _on_return_pressed():
 func TreeList():
 	$HUD/Tree/List.clear()
 	for N in self.get_children():
-		if N.get_name() == "HUD":
+		if N.get_name() == "HUD" or N.get_name() == "Trash":
 			continue
 		$HUD/Tree/List.add_item(N.get_name())
 
@@ -112,16 +112,17 @@ var SelectedObj = null
 
 
 func _on_list_item_clicked(index, at_position, mouse_button_index):
-	index += 1 
+	index += 2
 	
 	SelectedObj = self.get_child(index)
 
 
 func ObjectInfo(object : Node):
-	var pos_x = snapped(object.position.x, 0.001)
-	var pos_y = snapped(object.position.y, 0.001)
-	var pos_z = snapped(object.position.z, 0.001)
+	var pos_x = snapped(object.position.x, 0.01)
+	var pos_y = snapped(object.position.y, 0.01)
+	var pos_z = snapped(object.position.z, 0.01)
 	
-	
-	$HUD/Object/Position.text = "x: %s, y: %s, z: %s" % [pos_x, pos_y, pos_z]
+	$HUD/Object/Position/x.text = str(pos_x)
+	$HUD/Object/Position/y.text = str(pos_y)
+	$HUD/Object/Position/z.text = str(pos_z)
 	

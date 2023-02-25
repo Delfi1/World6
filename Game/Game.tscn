@@ -13,6 +13,8 @@
 [node name="Game" type="Node3D"]
 script = ExtResource("1_ftmxg")
 
+[node name="Trash" type="Node" parent="."]
+
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 11
@@ -92,12 +94,36 @@ grow_horizontal = 2
 text = "Object settings"
 horizontal_alignment = 1
 
-[node name="Position" type="Label" parent="HUD/Object"]
+[node name="Position" type="Panel" parent="HUD/Object"]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 32.0
-offset_right = 112.0
-offset_bottom = 64.0
+offset_right = 304.0
+offset_bottom = 80.0
+
+[node name="x" type="LineEdit" parent="HUD/Object/Position"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 39.0
+placeholder_text = "x"
+
+[node name="y" type="LineEdit" parent="HUD/Object/Position"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 8.0
+offset_right = 180.0
+offset_bottom = 39.0
+placeholder_text = "y"
+
+[node name="z" type="LineEdit" parent="HUD/Object/Position"]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 39.0
+placeholder_text = "z"
 
 [node name="Light" parent="." instance=ExtResource("2_vfqqd")]
 transform = Transform3D(0.5, 0.433013, -0.75, 0, 0.866025, 0.5, 0.866025, -0.25, 0.433013, -6, 5, 4)
@@ -128,3 +154,7 @@ current = true
 
 [connection signal="pressed" from="HUD/Return" to="." method="_on_return_pressed"]
 [connection signal="item_clicked" from="HUD/Tree/List" to="." method="_on_list_item_clicked"]
+[connection signal="focus_entered" from="HUD/Object/Position/x" to="." method="_on_x_focus_entered"]
+[connection signal="focus_exited" from="HUD/Object/Position/x" to="." method="_on_x_focus_exited"]
+[connection signal="focus_entered" from="HUD/Object/Position/y" to="." method="_on_y_focus_entered"]
+[connection signal="focus_exited" from="HUD/Object/Position/y" to="." method="_on_y_focus_exited"]
