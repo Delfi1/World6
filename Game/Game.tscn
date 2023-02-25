@@ -39,9 +39,7 @@ shape = SubResource("BoxShape3D_hs4hy")
 [node name="GlobalCamera" type="Camera3D" parent="Camera/Neck"]
 current = true
 
-[node name="HUD" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="HUD"]
+[node name="HUD" type="Control" parent="."]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -50,7 +48,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Return" type="Button" parent="HUD/Control"]
+[node name="PauseScreen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Return" type="Button" parent="PauseScreen"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
@@ -59,4 +66,4 @@ offset_bottom = 48.0
 focus_mode = 0
 text = "Return to menu"
 
-[connection signal="pressed" from="HUD/Control/Return" to="." method="_on_return_pressed"]
+[connection signal="pressed" from="PauseScreen/Return" to="." method="_on_return_pressed"]

@@ -7,7 +7,6 @@ const SPEED = 5.0
 
 @onready var Camera = $Neck/GlobalCamera
 
-
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
