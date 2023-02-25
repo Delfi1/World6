@@ -7,12 +7,6 @@ const SPEED = 5.0
 
 @onready var Camera = $Neck/GlobalCamera
 
-func _unhandled_input(event):
-	if IsCaptured():
-		if event is InputEventMouseMotion:
-			Neck.rotate_y(-event.relative.x * 0.005)
-			Camera.rotate_x(-event.relative.y * 0.005)
-			Camera.rotation.x = clamp(Camera.rotation.x, deg_to_rad(-60), deg_to_rad(90))
 
 func IsCaptured():
 	return Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED

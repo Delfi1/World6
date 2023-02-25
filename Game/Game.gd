@@ -11,24 +11,38 @@ var objects = []
 @onready var Camera = $Camera/Neck/GlobalCamera
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	TreeList()
+	
+
+var RightButtonPressed = false
+
+func _unhandled_input(event):
+	if IsCaptured():
+		if event is InputEventMouseMotion:
+			Neck.rotate_y(-event.relative.x * 0.005)
+			Camera.rotate_x(-event.relative.y * 0.005)
+			Camera.rotation.x = clamp(Camera.rotation.x, deg_to_rad(-60), deg_to_rad(90))
+	
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
+		if event.is_pressed():  # Mouse button down.
+			RightButtonPressed = true
+		elif not event.is_pressed():  # Mouse button released.
+			RightButtonPressed = false
+	
+	
 
 func _input(event):
-	$PauseScreen.visible = not IsCaptured()
-	if event.is_action_pressed("ui_cancel"):
-		if IsCaptured():
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
+	if event.is_action_pressed("ui_focus_next"):
+		$HUD.visible = not $HUD.visible
 	
 	if event.is_action_pressed("Undo") and len(actions) != 0:
 		if actions[len(actions)] == "Object":
 			objects[len(objects)-1].queue_free()
 			objects.erase(objects[len(objects)-1])
+			TreeList()
 		
 		actions.erase(len(actions))
-	
+		TreeList()
 	
 	if event.is_action_pressed("Light"):
 		var Light = preload("res://Game/Objects/light.tscn")
@@ -37,14 +51,40 @@ func _input(event):
 		var pos = Camera.global_transform.origin
 		
 		summon(Light, pos, rot)
+		TreeList()
+
+
+func _process(delta):
+	if RightButtonPressed:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		TreeList()
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+	if SelectedObj != null:
+		ObjectInfo(SelectedObj)
+
 
 func summon(scene : PackedScene, pos : Vector3, rot := Vector3(0, 0, 0)):
 	var object = scene.instantiate()
+	
+	var name = object.name
+	
+	var add = 2
+	
+	while true:
+		if self.has_node(NodePath(object.name)):
+			object.name = name + str(add)
+			add += 1
+		else:
+			break
+	
+	
 	add_child(object)
 	object.position = pos
 	object.rotation = rot
 	AddObject(object)
-
+	TreeList()
 
 
 func AddObject(object : Node):
@@ -58,3 +98,30 @@ func IsCaptured():
 
 func _on_return_pressed():
 	get_tree().change_scene_to_file("res://Main/Main.tscn")
+
+
+func TreeList():
+	$HUD/Tree/List.clear()
+	for N in self.get_children():
+		if N.get_name() == "HUD":
+			continue
+		$HUD/Tree/List.add_item(N.get_name())
+
+
+var SelectedObj = null
+
+
+func _on_list_item_clicked(index, at_position, mouse_button_index):
+	index += 1 
+	
+	SelectedObj = self.get_child(index)
+
+
+func ObjectInfo(object : Node):
+	var pos_x = snapped(object.position.x, 0.001)
+	var pos_y = snapped(object.position.y, 0.001)
+	var pos_z = snapped(object.position.z, 0.001)
+	
+	
+	$HUD/Object/Position.text = "x: %s, y: %s, z: %s" % [pos_x, pos_y, pos_z]
+	
