@@ -29,10 +29,12 @@ func Admin():
 	if not Core.UserData["Admin"]:
 		return
 	
-	$Tile.text += " [Admin mode]"
+	$Tile.text = "World [Admin mode]"
 	$CreateRoom.visible = true
 	$CreateRoom.disabled = false
 	
+	$Test.visible = true
+	$Test.disabled = false
 
 func _input(event):
 	if event == InputEventKey:
@@ -76,3 +78,11 @@ func _on_update_request(result, response_code, headers, body):
 func _on_timer_timeout():
 	CheckUpdate()
 	Admin()
+
+
+func _on_create_room_pressed():
+	get_tree().change_scene_to_file("res://Lobby/Create.tscn")
+
+
+func _on_test_pressed():
+	get_tree().change_scene_to_file("res://Game/Game.tscn")

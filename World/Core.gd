@@ -4,7 +4,7 @@ var PckUrl = "https://github.com/Delfi1/World6/blob/master/Export/World.pck?raw=
 
 var VerUrl = "https://raw.githubusercontent.com/Delfi1/World6/master/Export/Version.txt"
 
-var Version = "0.0.2.0"
+var Version = "0.0.2.1"
 
 var Server = null
 
@@ -13,6 +13,10 @@ var UserData = {
 	"Email" : null,
 	"UUID" : null,
 }
+
+var Config = {
+	MaxPlayers = 0 }
+
 
 func IsFullscreen():
 	return get_viewport().get_window().mode == Window.MODE_EXCLUSIVE_FULLSCREEN
@@ -26,7 +30,9 @@ func _input(event):
 		else:
 			get_viewport().get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN
 
+
 var SavedCollection = null
+
 
 func GetDocument(collection_id, document_id, function : Callable, error : Callable):
 	if SavedCollection != null:

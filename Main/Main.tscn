@@ -13,6 +13,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fxc0m")
 
+[node name="System" type="Node" parent="."]
+
+[node name="CheckRequest" type="HTTPRequest" parent="System"]
+
+[node name="UpdateRequest" type="HTTPRequest" parent="System"]
+
+[node name="Timer" type="Timer" parent="System"]
+
 [node name="BackGround" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -124,14 +132,6 @@ fit_content = true
 autowrap_mode = 1
 selection_enabled = true
 
-[node name="System" type="Node" parent="."]
-
-[node name="CheckRequest" type="HTTPRequest" parent="System"]
-
-[node name="UpdateRequest" type="HTTPRequest" parent="System"]
-
-[node name="Timer" type="Timer" parent="System"]
-
 [node name="CreateRoom" type="Button" parent="."]
 visible = false
 layout_mode = 0
@@ -142,9 +142,21 @@ offset_bottom = 560.0
 disabled = true
 text = "Create Lobby"
 
-[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[node name="Test" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 64.0
+offset_top = 576.0
+offset_right = 248.0
+offset_bottom = 624.0
+disabled = true
+text = "Test 3D"
+
 [connection signal="request_completed" from="System/CheckRequest" to="." method="_on_check_request"]
 [connection signal="request_completed" from="System/UpdateRequest" to="." method="_on_update_request"]
 [connection signal="timeout" from="System/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="System/Timer" to="Logs" method="_on_timer_timeout"]
 [connection signal="timeout" from="System/Timer" to="UserInfo" method="_on_timer_timeout"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="CreateRoom" to="." method="_on_create_room_pressed"]
+[connection signal="pressed" from="Test" to="." method="_on_test_pressed"]
