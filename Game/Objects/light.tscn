@@ -1,3 +1,11 @@
-[gd_scene format=3 uid="uid://gqvpx0110064"]
+[gd_scene load_steps=3 format=3 uid="uid://gqvpx0110064"]
+
+[ext_resource type="Script" path="res://Game/Objects/light.gd" id="1_gun2o"]
+[ext_resource type="Texture2D" uid="uid://5548clig3547" path="res://Game/Objects/Light.png" id="1_lbua2"]
 
 [node name="Light" type="DirectionalLight3D"]
+script = ExtResource("1_gun2o")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+texture = ExtResource("1_lbua2")
