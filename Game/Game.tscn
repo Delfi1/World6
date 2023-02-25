@@ -1,16 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://cxexu4y38pa5t"]
+[gd_scene load_steps=5 format=3 uid="uid://cxexu4y38pa5t"]
 
 [ext_resource type="PackedScene" uid="uid://bmfae04e8lf8l" path="res://Game/Objects/Cube.blend" id="1_81kwb"]
 [ext_resource type="Script" path="res://Game/Game.gd" id="1_ftmxg"]
+[ext_resource type="Script" path="res://Game/Camera.gd" id="3_23psg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hs4hy"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_ftmxg")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 2, 4)
-current = true
 
 [node name="Cube" parent="." instance=ExtResource("1_81kwb")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.258819, 0.482963, -0.836516, 0, 0.866025, 0.5, 0.965926, -0.12941, 0.224144, -6, 5, 2)
+
+[node name="Camera" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 4)
+script = ExtResource("3_23psg")
+
+[node name="GlobalCamera" type="Camera3D" parent="Camera"]
+current = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Camera"]
+shape = SubResource("BoxShape3D_hs4hy")
+disabled = true
