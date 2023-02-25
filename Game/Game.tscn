@@ -1,26 +1,62 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxexu4y38pa5t"]
+[gd_scene load_steps=6 format=3 uid="uid://cxexu4y38pa5t"]
 
-[ext_resource type="PackedScene" uid="uid://bmfae04e8lf8l" path="res://Game/Objects/Cube.blend" id="1_81kwb"]
 [ext_resource type="Script" path="res://Game/Game.gd" id="1_ftmxg"]
 [ext_resource type="Script" path="res://Game/Camera.gd" id="3_23psg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ri2qo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ivu25"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hs4hy"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_ftmxg")
 
-[node name="Cube" parent="." instance=ExtResource("1_81kwb")]
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.258819, 0.482963, -0.836516, 0, 0.866025, 0.5, 0.965926, -0.12941, 0.224144, -6, 5, 2)
+transform = Transform3D(0.5, 0.433013, -0.75, 0, 0.866025, 0.5, 0.866025, -0.25, 0.433013, -6, 5, 4)
+
+[node name="Cube" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cube"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+mesh = SubResource("BoxMesh_ri2qo")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Cube"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube/StaticBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_ivu25")
 
 [node name="Camera" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 4)
 script = ExtResource("3_23psg")
 
-[node name="GlobalCamera" type="Camera3D" parent="Camera"]
-current = true
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Camera"]
 shape = SubResource("BoxShape3D_hs4hy")
-disabled = true
+
+[node name="Neck" type="Node3D" parent="Camera"]
+
+[node name="GlobalCamera" type="Camera3D" parent="Camera/Neck"]
+current = true
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="HUD"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Return" type="Button" parent="HUD/Control"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 152.0
+offset_bottom = 48.0
+focus_mode = 0
+text = "Return to menu"
+
+[connection signal="pressed" from="HUD/Control/Return" to="." method="_on_return_pressed"]

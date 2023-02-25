@@ -2,6 +2,7 @@ extends Control
 
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	GetUserData()
 	Core.WindowMinSize(Vector2i(1280, 720))
 	_on_timer_timeout()
